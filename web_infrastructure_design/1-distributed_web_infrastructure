@@ -1,0 +1,27 @@
+This infrastructure hosts www.foobar.com and uses:
+
+- A DNS A record (www.foobar.com → 8.8.8.8)
+- 1 Load Balancer (HAProxy) configured with Round-Robin distribution algorithm
+- 2 Backend servers, each running:
+  - Nginx (Web Server)
+  - Application Server (e.g., PHP)
+  - Application files (codebase)
+  - MySQL (one Primary, one Replica)
+
+The Load Balancer uses an Active-Active setup, meaning both backend servers actively receive traffic.
+
+MySQL is configured in a Primary-Replica cluster:
+- Primary: handles write and read
+- Replica: handles read-only
+- The application writes to the Primary and reads from the Replica to reduce load
+
+Issues:
+- SPOFs:
+  - Load Balancer (if it fails, all traffic is blocked)
+  - MySQL Primary (no writes if it fails)
+- Security:
+  - No firewall
+  - No HTTPS (data not encrypted in transit)
+- No monitoring or alerting for failures
+
+This setup improves scalability and availability over a single-server model but still lacks full redundancy.
