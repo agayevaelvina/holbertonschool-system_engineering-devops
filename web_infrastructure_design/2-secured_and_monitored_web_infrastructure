@@ -1,0 +1,27 @@
+This infrastructure hosts www.foobar.com with encryption, security, and monitoring:
+
+Components:
+- DNS A record: www.foobar.com → 8.8.8.8 (Load Balancer IP)
+- Load Balancer (HAProxy) with SSL certificate to serve HTTPS
+- 3 Firewalls:
+  - Firewall 1: protects Load Balancer (allows HTTPS only)
+  - Firewall 2 & 3: protect backend servers (allow limited ports)
+- 2 Backend servers, each with:
+  - Nginx Web Server
+  - Application Server
+  - MySQL (Primary on Server 1, Replica on Server 2)
+  - Monitoring Client (e.g., Sumo Logic agent)
+
+SSL ensures secure, encrypted traffic. Firewalls block unauthorized access. Monitoring agents collect logs and metrics.
+
+Monitoring:
+- Collects system metrics (CPU, disk, memory)
+- Parses web server logs to track QPS (Queries Per Second)
+- Sends data to external service (Sumo Logic or similar)
+
+Issues:
+- SSL termination at the Load Balancer leaves internal traffic unencrypted.
+- Only one MySQL Primary – if it fails, no writes possible.
+- Servers have full stack (Web, App, DB) – harder to scale or isolate failures.
+
+This design is secure and observable, but not fully redundant or scalable.
