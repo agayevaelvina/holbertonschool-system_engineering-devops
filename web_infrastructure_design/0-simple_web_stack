@@ -1,0 +1,24 @@
+A user wants to access the website www.foobar.com.
+
+The domain name www.foobar.com is configured with a DNS A record that points to the IP address 8.8.8.8.
+
+At IP address 8.8.8.8, there is one server running:
+
+- A web server (Nginx), which listens for HTTP requests.
+- An application server (e.g., PHP-FPM), which runs the backend logic.
+- The application codebase, containing all website files.
+- A MySQL database, which stores persistent data.
+
+Nginx communicates with the user's browser via HTTP/HTTPS.
+Nginx forwards dynamic requests to the application server.
+The application may query the MySQL database for data.
+
+Limitations:
+- Single Point of Failure: if the server fails, the whole website goes down.
+- Maintenance causes downtime.
+- No scalability for handling large traffic volumes.
+
+DNS Details:
+- Domain: foobar.com
+- Subdomain: www
+- DNS Record: A record (www.foobar.com → 8.8.8.8)
