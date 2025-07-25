@@ -1,0 +1,23 @@
+This infrastructure design scales up a basic web system for better performance, availability, and separation of concerns.
+
+Components added:
+
+1. One additional server:
+   - Purpose: To allow horizontal scaling and better resource distribution.
+   - Benefit: More traffic can be handled and there's less chance of overloading a single server.
+
+2. Load Balancer Cluster (2 HAProxy instances):
+   - Purpose: Create a highly available load balancing setup.
+   - Configuration: HAProxy instances are configured in a cluster (active-active or active-passive).
+   - Benefit: Prevents a single point of failure at the load balancing layer.
+
+3. Split components into dedicated servers:
+   a. Web Server (e.g., Nginx):
+      - Handles HTTP requests and static files.
+   b. Application Server (e.g., Gunicorn):
+      - Runs the dynamic application logic.
+   c. Database Server (e.g., MySQL or PostgreSQL):
+      - Stores and manages data.
+
+   - Purpose: Each component is deployed on a separate server.
+   - Benefit: Improves performance, allows independent scaling, and enforces separation of concerns.
